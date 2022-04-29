@@ -9,7 +9,7 @@ import { JwtStrategy } from './jwt.strategy';
 @Module({
   imports:[ JwtModule.register({
     secret:jwtConstants.secret,
-    signOptions: { expiresIn: '1h' },
+    signOptions: {  },
   }),UsersModule],
   providers: [AuthsService,JwtStrategy],
   controllers: [AuthsController]

@@ -27,17 +27,24 @@ async regiteruser (user:any){
     if (user && isvalid) {
       const { password, ...result } = user;
       //console.log(result)
-      const {access_token} =await this.login(result)
-      return {username:user.username, access_token};
+      const {access_token,acess_reset_token} =await this.login(result)
+      return {username:user.username, access_token,acess_reset_token};
     }
      throw new NotFoundException("password not correct");
   }
   async login(user: any) {
     //const payload = { username: user.username, sub: user.userId };
     const payload = { username: user._doc.username, sub: user._doc._id };
-
+// access_token: 
     return {
-     access_token: this.jwtService.sign(payload),
+     access_token: await this.jwtService.signAsync(payload, {
+      expiresIn: '60s',
+      secret: jwtConstants.secret,
+    }),
+     acess_reset_token: await this.jwtService.signAsync(payload, {
+      expiresIn: '1h',
+      secret: jwtConstants.secret,
+    })
 
     };
   }
