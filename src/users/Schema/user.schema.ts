@@ -1,4 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { isEmail } from 'class-validator';
 import { Document } from 'mongoose';
 
 export type UserDocument = User & Document;
